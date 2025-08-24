@@ -176,7 +176,14 @@ function MainDashboard() {
           </Button>
         </div>
       </motion.div>
-
+      <motion.div
+       initial={{ opacity: 0, y: 20 }}
+       animate={{ opacity: 1, y: 0 }}
+       className="bg-white rounded-lg shadow p-4 flex justify-center">
+        <Link to="/progress" >
+          <Button variant="teal" className="text-xl text-teal-700 hover:text-teal-50">Прогресс</Button>
+        </Link>
+      </motion.div>
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

@@ -68,9 +68,9 @@ export function Register({ className, ...props }) {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-teal-50 to-blue-50">
-      <div className={cn("flex flex-col gap-6 self-center max-w-md", className)} {...props}>
-        <Card className="overflow-hidden p-0 rounded-xl shadow-lg">
-          <CardContent className="grid p-0 md:grid-cols-2">
+      <div className={cn("flex flex-col gap-6 self-center ", className)} {...props}>
+        <Card className="overflow-hidden p-0 m-2 rounded-xl shadow-lg">
+          <CardContent className="grid p-0 ">
             <form onSubmit={handleRegister} className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
@@ -134,7 +134,7 @@ export function Register({ className, ...props }) {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-green-500 hover:bg-green-600">
+                <Button type="submit" variant="teal" className="text-xl text-center text-teal-700 hover:text-teal-50">
                   Зарегистрироваться
                 </Button>
 
@@ -177,13 +177,7 @@ export function Register({ className, ...props }) {
                 </div>
               </div>
             </form>
-            <div className="bg-muted relative hidden md:block">
-              <img
-                src="/placeholder.svg"
-                alt="Фоновая картинка"
-                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-              />
-            </div>
+    
           </CardContent>
         </Card>
 

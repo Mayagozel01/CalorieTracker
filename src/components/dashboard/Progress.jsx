@@ -8,8 +8,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "../ui/button"
 import {
   ResponsiveContainer,
   LineChart,
@@ -22,6 +24,7 @@ import {
 } from "recharts"
 import { motion } from "framer-motion"
 import { loadUserGoals, loadAllReports } from "../../redux/slices/FoodSlice"
+import { Link } from "react-router-dom"
 
 export default function ProgressPage() {
   const dispatch = useDispatch()
@@ -150,7 +153,6 @@ export default function ProgressPage() {
               </div>
             </TabsContent>
 
-            {/* Calorie History */}
             <TabsContent value="calories" className="pt-6">
               <div className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
@@ -183,8 +185,17 @@ export default function ProgressPage() {
               </div>
             </TabsContent>
           </Tabs>
+          <motion.div
+       initial={{ opacity: 0, y: 20 }}
+       animate={{ opacity: 1, y: 0 }}
+       className="bg-white rounded-lg shadow p-4 flex justify-center">
+        <Link to="/maindashboard" >
+          <Button variant="teal" className="text-xl text-teal-700 hover:text-teal-50">Назад на главную</Button>
+        </Link>
+      </motion.div>
         </CardContent>
       </Card>
+      
     </motion.div>
   )
 }

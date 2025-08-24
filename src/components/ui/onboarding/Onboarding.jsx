@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { calculateAndSaveGoals, setGuestId } from '../../../redux/slices/FoodSlice';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import { auth } from '../../../lib/firebase';
 
 const OnboardingForm = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const OnboardingForm = () => {
       <Card className="w-full max-w-md rounded-xl shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center text-teal-700">
-            Давай достигнем твоей цели! 🚀
+            Давай достигнем твоей цели{auth.currentUser.displayName ? auth.currentUser.displayName : null}! 🚀
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -203,8 +204,9 @@ const OnboardingForm = () => {
             Ты на пути к своей цели! 🌟
           </p>
           <div className="text-center">
+            {!auth.currentUser.displayName?
             <Link to="/login">
-              <Button variant="teal" className="text-xl text-center text-teal-700 hover:text-teal-50">Войти</Button></Link>
+              <Button variant="teal" className="text-xl text-center text-teal-700 hover:text-teal-50">Войти</Button></Link>:null}
           </div>
         </CardContent>
       </Card>
