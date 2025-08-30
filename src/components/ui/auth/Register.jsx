@@ -11,6 +11,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
 import { toast } from "react-toastify"
 import { mergeGuestData } from "../../../redux/slices/FoodSlice"
+import { login } from "../../../redux/slices/AuthSlice"
 
 export function Register({ className, ...props }) {
   const dispatch = useDispatch()
@@ -26,14 +27,12 @@ export function Register({ className, ...props }) {
     e.preventDefault()
     setError("")
 
-    // Validate password confirmation
     if (password !== confirmPassword) {
       setError("Пароли не совпадают")
       toast.error("Пароли не совпадают")
       return
     }
 
-    // Validate password strength (e.g., minimum 6 characters)
     if (password.length < 6) {
       setError("Пароль должен содержать минимум 6 символов")
       toast.error("Пароль должен содержать минимум 6 символов")
@@ -41,11 +40,9 @@ export function Register({ className, ...props }) {
     }
 
     try {
-      // Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       const user = userCredential.user
 
-      // Save user data to Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         userName,
@@ -57,6 +54,8 @@ export function Register({ className, ...props }) {
         await dispatch(mergeGuestData({ guestId })).unwrap()
         toast.success("Гостевые данные перенесены! 🎉")
       }
+
+      dispatch(login({ userName }))
 
       toast.success("Регистрация успешна! 🚀")
       navigate("/onboarding")
@@ -84,7 +83,6 @@ export function Register({ className, ...props }) {
                   <div className="text-red-500 text-sm text-center">{error}</div>
                 )}
 
-                {/* Name */}
                 <div className="grid gap-3">
                   <Label htmlFor="name">Имя</Label>
                   <Input
@@ -97,7 +95,6 @@ export function Register({ className, ...props }) {
                   />
                 </div>
 
-                {/* Email */}
                 <div className="grid gap-3">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -110,7 +107,6 @@ export function Register({ className, ...props }) {
                   />
                 </div>
 
-                {/* Password */}
                 <div className="grid gap-3">
                   <Label htmlFor="password">Пароль</Label>
                   <Input
@@ -122,7 +118,6 @@ export function Register({ className, ...props }) {
                   />
                 </div>
 
-                {/* Confirm Password */}
                 <div className="grid gap-3">
                   <Label htmlFor="confirmPassword">Подтвердите пароль</Label>
                   <Input
@@ -144,7 +139,6 @@ export function Register({ className, ...props }) {
                   </span>
                 </div>
 
-                {/* Social buttons */}
                 <div className="grid grid-cols-3 gap-4">
                   <Button variant="outline" type="button" className="w-full" aria-label="Register with Apple">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5">

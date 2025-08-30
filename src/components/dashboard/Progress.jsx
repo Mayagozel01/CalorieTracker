@@ -35,7 +35,6 @@ export default function ProgressPage() {
     dispatch(loadAllReports())
   }, [dispatch])
 
-  // Форматирование данных для графиков
   const weightData = reports
     .filter((report) => report.weight)
     .map((report) => ({
@@ -48,12 +47,10 @@ export default function ProgressPage() {
     calories: report.totalCalories,
   }))
 
-  // Расчёт оставшихся дней
   const daysLeft = goals?.targetDate
     ? Math.max(1, Math.round((new Date(goals.targetDate) - new Date()) / (1000 * 60 * 60 * 24)))
     : 0
 
-  // Прогноз веса
   const currentWeight = goals?.currentWeight || weightData[weightData.length - 1]?.weight || 0
   const targetWeight = goals?.targetWeight || 0
   const dailyWeightChange = daysLeft && targetWeight && currentWeight

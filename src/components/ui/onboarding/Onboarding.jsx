@@ -14,6 +14,7 @@ const OnboardingForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { guestId } = useSelector((state) => state.food);
+  const userName = useSelector((state)=>state.auth.userName);
   const [formData, setFormData] = useState({
     gender: '',
     age: '',
@@ -26,13 +27,11 @@ const OnboardingForm = () => {
   });
   const [error, setError] = useState('');
 
-  // Handle input changes
   const handleChange = useCallback((name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     setError('');
   }, []);
 
-  // Validate all fields
   const validateForm = useCallback(() => {
     if (!formData.gender) return 'Пожалуйста, выберите пол.';
     const age = Number(formData.age);
@@ -62,13 +61,13 @@ const OnboardingForm = () => {
     }
 
     const newGuestId = guestId || uuidv4();
-    dispatch(setGuestId(newGuestId)); // Сохраняем guestId в Redux
+    dispatch(setGuestId(newGuestId)); 
 
     dispatch(calculateAndSaveGoals(formData))
       .unwrap()
       .then(() => {
         toast.success('Цели сохранены! 🎉 Войдите, чтобы сохранить прогресс.');
-        navigate('/maindashboard'); // Перенаправляем на страницу входа для гостей
+        navigate('/maindashboard'); 
       })
       .catch((err) => {
         setError('Ошибка сохранения: ' + err);
@@ -81,7 +80,7 @@ const OnboardingForm = () => {
       <Card className="w-full max-w-md rounded-xl shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center text-teal-700">
-            Давай достигнем твоей цели{auth.currentUser?.displayName ? auth.currentUser?.displayName : null}! 🚀
+            {userName?`${userName}, `:null}Давай достигнем твоей цели! 🚀
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -204,7 +203,7 @@ const OnboardingForm = () => {
             Ты на пути к своей цели! 🌟
           </p>
           <div className="text-center">
-            {!auth.currentUser?.displayName?
+            {!userName?
             <Link to="/login">
               <Button variant="teal" className="text-xl text-center text-teal-700 hover:text-teal-50">Войти</Button></Link>:null}
           </div>

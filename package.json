@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://mayagozel01.github.io/CalorieTracker",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

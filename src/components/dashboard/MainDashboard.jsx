@@ -50,6 +50,7 @@ const CircularProgress = ({ progress, size = 100, strokeWidth = 10 }) => {
 function MainDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userName = useSelector((state)=>state.auth.userName);
   const { items: foodItems, totalCalories, goals, status, error, guestId } = useSelector((state) => state.food);
   const [foodName, setFoodName] = useState('');
   const [foodWeight, setFoodWeight] = useState('');
@@ -64,7 +65,7 @@ function MainDashboard() {
     dispatch(loadUserGoals({ guestId }));
     dispatch(loadDailyReport({ date, guestId }));
     if (!goals && status !== 'loading') {
-      navigate('/onboarding'); // Redirect to onboarding if no goals
+      navigate('/onboarding');
     }
   }, [dispatch, date, guestId, goals, status, navigate]);
 
@@ -121,11 +122,11 @@ function MainDashboard() {
   return (
     <div className="max-w-2xl mx-auto p-4 sm:p-6 flex flex-col gap-4 bg-gradient-to-b from-teal-50 to-blue-50">
       {status === 'loading' && <p className="text-center text-gray-600">Загрузка...</p>}
-      {guestId && (
+      {guestId?
         <p className="text-center text-sm text-yellow-600">
           Вы используете гостевой режим. <Link to="/login" className="underline">Войдите</Link>, чтобы сохранить прогресс!
-        </p>
-      )}
+        </p>:userName
+      }
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

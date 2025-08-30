@@ -7,7 +7,7 @@ import ProgressPage from './components/dashboard/Progress';
 import Login from './components/ui/auth/Login';
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/CalorieTracker">
       <Routes>
         <Route path="/" element={<Navigate to="/onboarding" replace/>}/>
         <Route path="/onboarding" element={<OnboardingForm/>} />
